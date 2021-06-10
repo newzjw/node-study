@@ -29,10 +29,8 @@ console.log(buf2)
 
 //3.Buffer.allocUnsafe创建一个Buffer实例，效率最高的一种方式
 /*
-* 1.为什么通过Buffer.allocUnsafe创建出来的实例，里面不为空？
-*
-* 2.为什么存的是二进制，输出的却不是二进制？
-*     存储的确实为二进制数据，但是，一旦输出为了便于观察，自动转成16进制。
+* 1.输出的Buffer为什么不是二进制？ ----- 输出的是16进制，但是存储的是二进制吗，输出的时候会自动转16进制。
+* 2.输出的Buffer不为空？ ----- 在堆里开辟空间，可能残留着别人用过的数据，所以allocUnsafe
 * */
 let buf3 = Buffer.allocUnsafe(10)
 console.log(buf3)
