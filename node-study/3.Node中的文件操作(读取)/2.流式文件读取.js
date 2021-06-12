@@ -31,7 +31,7 @@ rs.on('open',function () {
 })
 rs.on('close',function () {
   console.log('可读流关闭了')
-  ws.close()
+  ws.close() // 应该在这里关闭可写流
 })
 ws.on('open',function () {
   console.log('可写流打开了')
