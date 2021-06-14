@@ -1,7 +1,7 @@
 /*
 * mongoDB:一个数据库品牌的名字
-* mongod:启动数据库的命令
-* mongo:连接接数据库的命令
+* mongod:启动数据库的命令。可以通过做成windows系统服务，简化这一步。
+* mongo:连接接数据库的命令。可以通过GUI工具studio-3T
 * mongoose：在Node平台下，一个知名的用于帮助开发者连接mongoDB的包
 * */
 //为什么用mongoose？ 想在Node平台下，更加简单、高效、安全、稳定的操作mongoDB

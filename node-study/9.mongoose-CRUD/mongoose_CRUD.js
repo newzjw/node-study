@@ -79,7 +79,7 @@ mongoose.connection.on('open',function (err) {
       if (!err) console.log(data)
       else console.log(err)
     })*/
-    /*find方法：
+    /*findOne方法：
         1.若有结果，返回的是一个对象
         2.若没有结果，返回一个null
     */
