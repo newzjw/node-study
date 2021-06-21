@@ -1,0 +1,42 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-06-21 16:32:27
+ * @LastEditTime: 2021-06-21 16:35:50
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \node-study\0.防抖节流\节流.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 节流
+    function throttle(fn, delay = 100) {
+      let timer = null
+
+      return function () {
+        if (timer) {
+          return
+        }
+        timer = setTimeout(() => {
+          fn.apply(this, arguments)
+          timer = null
+        }, delay)
+      }
+    }
+
+    div1.addEventListener('drag', throttle(function (e) {
+      console.log(e.offsetX, e.offsetY)
+    }))
+  </script>
+</body>
+
+</html>
