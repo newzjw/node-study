@@ -3,7 +3,7 @@ let mongoose = require('mongoose')
 mongoose.set('useCreateIndex',true) //使用一个新的索引创建器
 
 //1.连接数据库
-mongoose.connect('mongodb://localhost:27017/demo',{
+mongoose.connect('mongodb://localhost:27017/zjw',{
   useNewUrlParser: true, //使用一个新的URL解析器，用于解决一些安全性问题。
   useUnifiedTopology: true //使用一个统一的新的拓扑结构。
 })
@@ -15,13 +15,9 @@ mongoose.connection.on('open',function (err) {
   }else{
     console.log('数据库连接成功')
     //3.操作数据库
-
-    //把数据库想象成你家的别墅
-
-    //1.请来一个帮你看门的保安 ------ 引入模式对象
+    //1.引入模式对象
     let Schema = mongoose.Schema
-
-    //2.制定进入你家的规则 --------  创建约束对象
+    //2.创建约束对象
     let studentsRule = new Schema({
       stu_id:{
         type:String, //限制学号必须为：字符串
@@ -52,33 +48,33 @@ mongoose.connection.on('open',function (err) {
       }
     })
 
-    //3.告诉保安你的规则 ------- 创建模型对象
+    //3.创建模型对象
     let stuModel = mongoose.model('students',studentsRule) //用于生成某个集合所对应的模型对象
 
-    //4.真正有人要进入你家了 -------- CRUD
+    //4.CRUD
 
     //新增操作 --- C
-    /*stuModel.create({
-      stu_id:'004',
-      name:'强',
-      age:'42',
-      sex:'男',
-      hobby:['女','打代码','打篮球'], //限制爱好只能为数组，数组中的每一项必须为字符串
-      info:'一个风一样的男子', //接收所有类型
-    },function(err,data){
-        if (!err) console.log(data)
-        else console.log(err)
-    })*/
+    // stuModel.create({
+    //   stu_id:'004',
+    //   name:'强',
+    //   age:'42',
+    //   sex:'男',
+    //   hobby:['女','打代码','打篮球'], //限制爱好只能为数组，数组中的每一项必须为字符串
+    //   info:'一个风一样的男子', //接收所有类型
+    // },function(err,data){
+    //     if (!err) console.log(data)
+    //     else console.log(err)
+    // })
 
     //查询 --- R
     /*find方法：
         1.返回的是一个数组，就算是一条数据，也包裹一个数组
         2.若查询结果为空，则返回一个空数组。
     */
-    /*stuModel.find({name:'金龙老师'},function (err,data) {
+    stuModel.find({name:'强'},function (err,data) {
       if (!err) console.log(data)
       else console.log(err)
-    })*/
+    })
     /*findOne方法：
         1.若有结果，返回的是一个对象
         2.若没有结果，返回一个null

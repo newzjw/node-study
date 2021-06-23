@@ -3,7 +3,7 @@ const express = require('express')
 
 //1.创建app服务对象
 const app = express()
-//禁止服务器返回X-Powered-By
+//禁止服务器返回X-Powered-By，防止客户端看到后端使用的是什么框架
 app.disable('x-powered-by')
 
 //2.配置路由 ------ 对请求的url进行分类，服务器根据分类决定交给谁去处理。
@@ -20,8 +20,8 @@ app.get('/',function (request,response) {
   *       1.请求方式必须为GET
   *       2.请求的URI必须为:“/”
   * */
-  console.log(request.query)
-  console.log(request.url)
+  console.log(request.query) // { name: 'zhangsan', age: '18' }
+  console.log(request.url) // /?name=zhangsan&age=18
   response.send('ok')
 })
 
