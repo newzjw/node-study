@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-06-14 01:18:40
- * @LastEditTime: 2021-06-14 03:03:37
+ * @LastEditTime: 2021-06-27 20:20:26
  * @LastEditors: Please set LastEditors
  * @Description: 不借助第三方库，搭建服务器
  * @FilePath: \node-study\11.node原生搭建服务器\server.js
@@ -30,7 +30,7 @@ let server = http.createServer((request, response) => {
   let {name, age} = objParams
   // 设置响应头
   response.setHeader('content-type','text/html;charset=utf-8')
-  response.end(`<h1>你好${name},你的年龄是${age}</h1>`)
+  response.end(`你好${name},你的年龄是${age}`)
 
 })
 
