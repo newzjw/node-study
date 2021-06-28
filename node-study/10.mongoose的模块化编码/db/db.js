@@ -7,7 +7,10 @@ mongoose.set('useCreateIndex',true) //使用一个新的索引创建器
 const DB_NAME = 'demo'
 const PORT = 27017
 const IP = 'localhost'
-
+/**
+ * 
+ * @param {*} callback 
+ */
 function connectMongo(callback) {
   //1.连接数据库
   mongoose.connect(`mongodb://${IP}:${PORT}/${DB_NAME}`,{
