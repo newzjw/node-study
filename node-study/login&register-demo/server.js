@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-06-22 20:18:41
- * @LastEditTime: 2021-06-23 14:48:19
+ * @LastEditTime: 2021-06-29 22:50:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-study\login&register-demo\server.js
@@ -34,7 +34,6 @@ db(() => {
   app.use(UIRouter())
   //使用loginRegisterRouter
   app.use(loginRegisterRouter())
-  // 绑定端口监听
   app.listen(3000, err => {
     if (!err) console.log('服务器启动成功！')
     else console.log(err)
