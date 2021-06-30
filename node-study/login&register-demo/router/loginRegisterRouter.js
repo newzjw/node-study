@@ -8,6 +8,8 @@ const {Router} = require('express')
 let router = new Router()
 //引入模型对象
 let usersModel = require('../model/usersModel')
+//引入md5加密模块
+let md5 = require('md5')
 
 //用于处理用户的注册请求，有很多业务逻辑(校验数据的有效性等) -------- 业务路由
 router.post('/register',(req,res)=>{
@@ -66,7 +68,7 @@ router.post('/register',(req,res)=>{
       return
     }
     //如果没有注册过
-    usersModel.create({email,nick_name,password},function (err) {
+    usersModel.create({email,nick_name,password:md5(password)},function (err) {
       if(!err){
         //如果写入成功了
         console.log(`邮箱为${email}的用户注册成功`)
@@ -103,7 +105,7 @@ router.post('/login',(req,res)=>{
     return
   }
   //3.去数据库中查找：
-  usersModel.findOne({email,password},(err,data)=>{
+  usersModel.findOne({email,password:md5(password)},(err,data)=>{
     if(err){
       //引入报警模块，当达到敏感阈值，触发报警。
       console.log(err)
