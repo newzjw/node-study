@@ -1,0 +1,43 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-07-11 10:24:17
+ * @LastEditTime: 2021-07-12 13:33:22
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \node-study\20_promise_axios\使用自定义的promise.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>自定义promise的使用</title>
+</head>
+<body>
+  <script src="./lib/promise.js"></script>
+  <script>
+    const p =new Promise((resolve, reject) => {
+      setTimeout(()=> {
+        resolve(1)
+      }, 1000)
+    })
+    p.then(
+      value => {
+        console.log('onResolved', value)
+      },
+      reason => {
+        console.log('onRejected', reason)
+      }
+    )
+    p.then(
+      value => {
+        console.log('onResolved2', value)
+      },
+      reason => {
+        console.log('onRejected2', reason)
+      }
+    )
+  </script>
+</body>
+</html>
