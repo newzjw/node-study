@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-11 10:23:51
- * @LastEditTime: 2021-07-15 22:49:50
+ * @LastEditTime: 2021-07-16 21:29:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-study\20_promise_axios\lib\promise.js
@@ -141,6 +141,38 @@
         })
       }
     })
+  }
+
+  /* 
+  用来指定失败回调函数的方法
+  catch是then的语法糖
+  */
+  Promise.prototype.catch = function (onRejected) {
+    return this.then(undefined, onRejected)
+  }
+
+  /* 
+  用来返回一个指定vlaue的成功的promise
+  value可能是一个一般的值, 也可能是promise对象
+  */
+  Promise.resolve = function (value) {
+    return new Promise((resolve, reject)=> {
+      // 如果value是一个promise, 最终返回的promise的结果由value决定
+      if (value instanceof Promise) {
+        value.then(resolve, reject)
+      } else { // value不是promise, 返回的是成功的promise, 成功的值就是value
+        resolve(value)
+      }
+    })
+  }
+
+  /* 
+  用来返回一个指定reason的失败的promise
+  */
+  Promise.reject = function (reason) {
+      return new Promise((resolve, reject) => {
+        reject(reason)
+      })
   }
 
   window.Promise = Promise
