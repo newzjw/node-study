@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-11 10:23:51
- * @LastEditTime: 2021-07-16 21:29:55
+ * @LastEditTime: 2021-07-17 07:17:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-study\20_promise_axios\lib\promise.js
@@ -156,7 +156,7 @@
   value可能是一个一般的值, 也可能是promise对象
   */
   Promise.resolve = function (value) {
-    return new Promise((resolve, reject)=> {
+    return new Promise((resolve, reject) => {
       // 如果value是一个promise, 最终返回的promise的结果由value决定
       if (value instanceof Promise) {
         value.then(resolve, reject)
@@ -170,10 +170,57 @@
   用来返回一个指定reason的失败的promise
   */
   Promise.reject = function (reason) {
-      return new Promise((resolve, reject) => {
-        reject(reason)
-      })
+    return new Promise((resolve, reject) => {
+      reject(reason)
+    })
   }
 
+  /* 
+  用来返回一个指定reason的失败的promise
+  */
+  Promise.reject = function (reason) {
+    return new Promise((resolve, reject) => {
+      reject(reason)
+    })
+  }
+
+  /* 
+  promises 一个数组，其中包含多个promise
+  返回一个promise, 只有当数组中所有promise都成功才成功, 否则失败
+  */
+  Promise.all = function (promises) {
+    return new Promise((resolve, reject) => {
+
+      let resolvedCount = 0 // 已经成功的数量 
+      const values = new Array(promises.length) // 用来保存成功promise的value值
+      // 遍历所有promise, 取其对应的结果
+      promises.forEach((p, index) => {
+        p.then(
+          value => {
+            resolvedCount++
+            values[index] = value
+            if (resolvedCount === promises.length) { // 都成功了
+              resolve(values)
+            }
+          },
+          reason => reject(reason)
+        )
+      })
+    })
+  }
+
+  /* 
+  promises，一个包含多个promise的数组
+  返回一个promise, 由第一个完成promise决定
+  */
+  Promise.race = function (promises) {
+    return new Promise((resolve, reject) => {
+      // 遍历所有promise, 取其对应的结果
+      promises.forEach(p => {
+        // 返回的promise由第一个完成p来决定其结果
+        p.then(resolve, reject)
+      })
+    })
+  }
   window.Promise = Promise
 })(window)
