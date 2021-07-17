@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-11 10:23:51
- * @LastEditTime: 2021-07-17 07:17:52
+ * @LastEditTime: 2021-07-17 07:19:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-study\20_promise_axios\lib\promise.js
@@ -176,15 +176,6 @@
   }
 
   /* 
-  用来返回一个指定reason的失败的promise
-  */
-  Promise.reject = function (reason) {
-    return new Promise((resolve, reject) => {
-      reject(reason)
-    })
-  }
-
-  /* 
   promises 一个数组，其中包含多个promise
   返回一个promise, 只有当数组中所有promise都成功才成功, 否则失败
   */
@@ -222,5 +213,33 @@
       })
     })
   }
+
+  /* 
+  返回一个延迟指定时间才成功(也可能失败)的promise
+  */
+  Promise.resolveDelay = function (value, time) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        // 如果value是一个promise, 最终返回的promise的结果由value决定
+        if (value instanceof Promise) {
+          value.then(resolve, reject)
+        } else { // value不是promise, 返回的是成功的promise, 成功的值就是value
+          resolve(value)
+        }
+      }, time)
+    })
+  }
+
+  /* 
+  返回一个延迟指定时间才失败的promise
+  */
+  Promise.rejectDelay = function (reason, time) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject(reason)
+      }, time)
+    })
+  }
+  
   window.Promise = Promise
 })(window)
