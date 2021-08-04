@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-28 00:36:58
- * @LastEditTime: 2021-07-28 18:10:13
+ * @LastEditTime: 2021-08-02 13:03:39
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-study\21_axios\01_axios的使用.html
@@ -21,24 +21,90 @@
   <button onclick="testDelete()">发送Delete请求</button><br>
   
   <script>
+    /* 
+    1.函数的返回值为promise, 成功的结果为response, 异常的结果为error
+    2.能处理多种类型的请求: GET/POST/PUT/DELETE
+    3.函数的参数为一个配置对象
+      {
+        url: '',   // 请求地址
+        method: '',   // 请求方式GET/POST/PUT/DELETE
+        params: {},  // GET/DELETE请求的query参数
+        data: {}, // POST或PUT请求的请求体参数 
+      }
+    4.响应json数据自动解析为js对象/数组
+    */
+
+    /* 
+    能发ajax请求的函数
+    1. 接收一个配置
+    2. 返回值是promise
+    3. 使用xhr发ajax请求
+    4. 携带请求参数
+    5. 取响应结果, 并更新promise状态
+    */
     function axios({
       url,
       method = "GET",
       params = {},
       data = {}
     }) {
+      // 4.1. 准备query参数  {a: 1, b: 2} ==> a=1&b=2 ==> url?a=1&b=2
+      let queryStr = ''
+      // ['a', 'b']
+      Object.keys(params).forEach(key => {
+        queryStr += `${key}=${params[key]}&`
+      })  // a=1&b=2&
+      if (queryStr) {
+        queryStr = queryStr.substring(0, queryStr.length-1)  // a=1&b=2
+        url += '?' + queryStr
+      }
+
+      // 4.2. 准备请求体参数
+      data = JSON.stringify(data)
       return new Promise((resolve, reject) => {
         // 创建xhr对象
         const xhr = new XMLHttpRequest()
-        // 绑定监听
+        // 5. 取响应结果, 并更新promise状态
         xhr.onreadystatechange = () => {
+          // 请求没完成, 直接结束
+          const {readyState, status, statusText} = xhr
+          if (readyState!==4) return
 
+          // 异步请求成功了, 更新promise为成功, 并传入成功的response
+          if (status>=200 && status<=299) {
+            const response = {
+              data: JSON.parse(xhr.response),
+              status,
+              statusText
+            }
+            resolve(response)
+          // 异步操作失败了, 更新promise为失败, 并传入成功的error
+          } else {
+            reject(new Error('request error status is ' + status))
+          }
         }
-        // 初始化
+        // 3. 使用xhr发ajax请求
         xhr.open(method, url, true)
         // 发送请求
-        xhr.send()
+        if (method==='POST' || method==='PUT' || method==='DELETE') {
+          xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8')
+          xhr.send(data) 
+        } else { // GET
+          xhr.send()
+        }
       })
+    }
+
+    axios.get = function (url, config) {
+      // return axios({
+      //   url,
+      //   ...config
+      // })
+      return axios(Object.assign({url}, config))
+    }
+
+    axios.post = function (url, data, config) {
+      return axios(Object.assign({url, data}, config))
     }
   </script>
   <script>
